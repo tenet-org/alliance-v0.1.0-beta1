@@ -13,6 +13,9 @@ import (
 
 // EndBlocker
 func EndBlocker(ctx sdk.Context, k keeper.Keeper) []abci.ValidatorUpdate {
+	// note: disable EndBlocker due to panic in RebalanceHook
+	return []abci.ValidatorUpdate{}
+
 	defer telemetry.ModuleMeasureSince(types.ModuleName, ctx.BlockTime(), telemetry.MetricKeyEndBlocker)
 	k.CompleteRedelegations(ctx)
 	if err := k.CompleteUndelegations(ctx); err != nil {
